@@ -1,12 +1,14 @@
 import React from 'react';
-
-import { Route } from 'react-router-dom'
+// import { Route } from 'react-router-dom'
 import Footer from './components/footer';
-
 //import Governance from './components/governance'
 // import Governance from './components/governance-new'
 import Governance from './components/governance-v2'
 import Header from './components/header';
+import BscHero from './assets/bscHero.svg'
+import NotConnected from "./components/NotConnected";
+import Connected from "./components/Connected";
+
 
 class App extends React.Component {
 
@@ -34,31 +36,46 @@ class App extends React.Component {
     }
   }
 
-render() {
-
-  if (!this.state.is_wallet_connected) {
-    return (<div className='App text-center'>
-      <Header darkTheme={this.state.darkTheme} toggleTheme={this.toggleTheme} />
-      <div className='container' className='App-container'>
-        <div className='mt-5'>
-          <h3 className='mb-4'>Please connect wallet to use this dApp</h3>
-          <button onClick={this.handleConnection} style={{borderRadius: '6px'}} className='btn btn-primary pr-5 pl-5'>
-            CONNECT WALLET</button>
+  render() {
+    return (
+      <div className="App text-center">
+        <Header
+          darkTheme={this.state.darkTheme}
+          toggleTheme={this.toggleTheme}
+        />
+        <div className="container App-container p-0">
+          <div className="">
+            <div className="container-fluid p-0">
+              <div className="exchangeWrapper">
+                <div className="innerBanner">
+                  <h1 className="bannerTitle">BSC Governance</h1>
+                  <p className="bannerSubTitle">Give your proposals</p>
+                </div>
+                <div style={{display: 'flex', alignItems: 'flex-end'}}>
+                <img src={BscHero} alt='bscHero' id="bscHero"/>
+                </div>
+              </div>
+            
+              
+                <div className="containertop container containertop">
+                  <span style={{display: 'flex'}}>My Wallet</span> 
+              {this.state.is_wallet_connected === false ? (  <>
+                <NotConnected handleConnection={this.handleConnection} />
+                </>
+                
+              ) : (
+                <Connected />)}
+                </div>
+              
+            </div>
+            <Governance />
+          </div>
         </div>
+        <Footer />
       </div>
-      <Footer />
-    </div>);
+    );
   }
-  return (
-    <div className="App">
-      <Header darkTheme={this.state.darkTheme} toggleTheme={this.toggleTheme} />
-      <div className="container mt-5 App-container" style={{minHeight: '500px'}}>
-        <Route path='/' render={props => <Governance {...props} />} />
-      </div>
-      <Footer />
-    </div>
-  );
-}
 }
 
 export default App;
+
