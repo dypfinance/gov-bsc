@@ -370,6 +370,7 @@ export default class Governance extends React.Component {
       this.setState({ coinbase });
       try {
         let _rBal = reward_token.balanceOf(coinbase);
+
         let _totalDeposited = governance.totalDepositedTokens(coinbase);
         let _lvsTime = governance.lastVotedProposalStartTime(coinbase);
         let _q = governance.QUORUM();
@@ -784,6 +785,8 @@ class ProposalDetails extends React.Component {
   handleSetOption = (option) => {
     if (Number(this.state.depositedTokens) > 0) return;
     this.setState({ option });
+    localStorage.setItem('NoVotes', getFormattedNumber(this.state.proposal._optionTwoVotes / 1e18, 6) );
+
   };
 
   handleExecute = () => {
@@ -1224,14 +1227,7 @@ class ProposalDetails extends React.Component {
                       </td>
                     </tr>
 
-                    <tr>
-                      <th className="d-flex">
-                        My {this.getOptionText(this.state.option)} Votes{" "}
-                      </th>
-                      <td className="text-right">
-                        <strong>{depositedTokens}</strong> <small>DYP</small>
-                      </td>
-                    </tr>
+                    
                     <tr>
                       <td
                         colSpan="2"
