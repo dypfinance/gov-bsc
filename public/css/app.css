@@ -417,7 +417,7 @@ strong {
   /* width: 100%; */
 }
 .connectWallet-blue {
-  background: linear-gradient(53.66deg, #475fba 1.07%, #1d91d0 90.46%);
+  background: linear-gradient(53.66deg, #D8A609 1.07%, #F3CA40 90.46%);
   box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.06);
   margin: 60px 0 auto auto;
   border-radius: 6px;
@@ -438,11 +438,11 @@ strong {
   opacity: .7;
 }
 .colored-container:first-child {
-  background-color: #3068AF;
+  background: rgba(0,0,0, 0.1);
 
 }
 .colored-container:last-child {
-  background-color: #1F7CB8;
+  background: rgba(0,0,0, 0.1);
 }
 
 .containertop {
