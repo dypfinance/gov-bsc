@@ -230,6 +230,26 @@ table small {
   background-image: url(../img/bscBanner.svg);
 }
 
+.ExpireWrapper {
+  background: rgba(227, 6, 19, 0.16);
+  color: var(--solid-btn-bg);
+  padding: 3px;
+  margin-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  border-radius: 50px;
+  height: 43px;
+}
+
+.actionText {
+  font-size: 12px;
+    border-bottom: 1px solid #F5F5F5;
+    padding: 0;
+    margin: 0 1rem 1rem;
+    display: flex;
+    color: #52A8A4;
+} 
+
 /* @media all and (min-width: 992px) {
     .table-stats td {
         position: relative!important;

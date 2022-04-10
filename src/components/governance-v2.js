@@ -7,7 +7,8 @@ import getFormattedNumber from "../functions/get-formatted-number";
 import Boxes from "./boxes";
 import Skeleton from "@mui/material/Skeleton";
 import Error from "../assets/error.svg";
-
+import Fire from "../assets/fire.svg";
+import ArrowButton from "../assets/arrowButton.svg";
 const { new_governance: governance, reward_token, BigNumber } = window;
 
 const LP_AMPLIFY_FACTOR = 1;
@@ -163,7 +164,7 @@ const AddProposal = (props) => {
 const ProposalCard = (props) => (
   <NavLink to={`/proposals/${props._proposalId}`}>
     <div className="container vault-container d-flex">
-      <div className="row vault-row text-start">
+      <div className="row vault-row text-start justify-content-between">
         <div
           className="col-sm-8 col-md-8 text-center mb-2 d-flex align-items-center gap-3 justify-content-start"
           style={{ gap: 10 }}
@@ -185,7 +186,7 @@ const ProposalCard = (props) => (
           </div>
         </div>
 
-        <div className="col-sm-12 text-left">
+        <div className="col-sm-10 text-left actionText">
           {{
             0: "Disburse / Burn",
             1: "Upgrade Governance",
@@ -194,9 +195,22 @@ const ProposalCard = (props) => (
             4: "Change Min Balance",
           }[props._proposalAction] || ""}
         </div>
-        <div className="col-sm-7 text-left">
-          <h4>Expires</h4>
-          <p className="text-muted small">
+        <div className="col-sm-7 text-left ExpireWrapper d-flex justify-content-center">
+          <p
+            style={{
+              fontSize: 12,
+              marginBottom: 0,
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            <img src={Fire} alt="fire" className="mr-0" />
+            Expires
+          </p>
+          <p
+            style={{ fontSize: 14, color: "var(--solid-btn-bg)" }}
+            className="text-muted small mb-0 d-flex justify-content-center"
+          >
             {moment
               .duration(
                 props._proposalStartTime * 1e3 +
@@ -205,7 +219,11 @@ const ProposalCard = (props) => (
               )
               .humanize(true)}
           </p>
-        </div>
+        </div> <img
+            src={ArrowButton}
+            alt="arrowbutton"
+            style={{ width: 30, margin: 0, position: 'relative', right: 12 }}
+          />
       </div>
     </div>
   </NavLink>
