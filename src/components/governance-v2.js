@@ -52,10 +52,7 @@ const AddProposal = (props) => {
   let { isOwner, connected } = props;
   return (
     <div>
-      <div
-        className="l-box addProposal"
-        style={{ marginTop: connected ? 43 : 0 }}
-      >
+      <div className="l-box addProposal" style={{ marginTop: connected ? 43 : 0}}>
         <h3 style={{ textAlign: "left" }}>Submit a proposal</h3>
         <form onSubmit={props.onSubmit(formState)}>
           <div>
@@ -92,7 +89,7 @@ const AddProposal = (props) => {
                 {stakingPools.map((v, i) => (
                   <option value={v.pools} key={i}>
                     {" "}
-                    {v.name}{" "}
+                    {v ? v.name : 'DYP'}{" "}
                   </option>
                 ))}
               </select>
@@ -221,12 +218,11 @@ const ProposalCard = (props) => (
               )
               .humanize(true)}
           </p>
-        </div>{" "}
-        <img
-          src={ArrowButton}
-          alt="arrowbutton"
-          style={{ width: 30, margin: 0, position: "relative", right: 12 }}
-        />
+        </div> <img
+            src={ArrowButton}
+            alt="arrowbutton"
+            style={{ width: 30, margin: 0, position: 'relative', right: 12 }}
+          />
       </div>
     </div>
   </NavLink>
@@ -264,14 +260,6 @@ export default class Governance extends React.Component {
       MIN_BALANCE_TO_INIT_PROPOSAL: "",
     };
   }
-
-  checkConnection = async () => {
-    let test = await window.web3.eth?.getAccounts().then((data) => {
-      data.length === 0
-        ? this.setState({ is_wallet_connected: false })
-        : this.setState({ is_wallet_connected: true });
-    });
-  };
 
   refreshProposals = async () => {
     if (this.state.isLoading && this.state.proposals.length > 0) return;
@@ -319,12 +307,18 @@ export default class Governance extends React.Component {
       return p;
     }
   };
-
+  checkConnection = async () => {
+    let test = await window.web3.eth?.getAccounts().then((data) => {
+      data.length === 0
+        ? this.setState({ is_wallet_connected: false })
+        : this.setState({ is_wallet_connected: true });
+    });
+  };
   componentDidMount() {
     this.refreshBalance();
     this.checkConnection();
     this.getProposal();
-    window._refreshBalInterval = setInterval(this.checkConnection, 500);
+    window._refreshBalInterval = setInterval(this.checkConnection, 1000);
     // window._refreshBalInterval = setInterval(this.getProposal, 3000);
     // window._refreshBalInterval = setInterval(this.refreshProposals, 3000);
     window.gRefBalInterval = setInterval(this.refreshBalance, 7e3);
@@ -493,8 +487,8 @@ export default class Governance extends React.Component {
 
                 {this.state.is_wallet_connected === true ? (
                   this.state.proposals.map((props, i) => (
-                    <div className="col-lg-3">
-                      <ProposalCard {...props} key={i} />
+                    <div className="col-lg-3" key={i} >
+                      <ProposalCard {...props} />
                     </div>
                   ))
                 ) : (
@@ -675,7 +669,7 @@ class ProposalDetails extends React.Component {
     this.refreshProposal();
     // this.getProposal()
     this.checkConnection();
-    window._refreshBalInterval = setInterval(this.checkConnection, 500);
+    window._refreshBalInterval = setInterval(this.checkConnection, 3000);
     window._refreshVoteBalInterval = setInterval(this.refreshBalance, 3000);
   }
 
@@ -691,11 +685,9 @@ class ProposalDetails extends React.Component {
   };
 
   getProposal = async (_proposalId) => {
-    if (this.state.is_wallet_connected === true) {
-      let p = await governance.getProposal(_proposalId);
-      p.vault = getPoolForProposal(p);
-      return p;
-    }
+    let p = await governance.getProposal(_proposalId);
+    p.vault = getPoolForProposal(p);
+    return p;
   };
 
   handleApprove = (e) => {
@@ -822,10 +814,8 @@ class ProposalDetails extends React.Component {
   handleSetOption = (option) => {
     if (Number(this.state.depositedTokens) > 0) return;
     this.setState({ option });
-    localStorage.setItem(
-      "NoVotes",
-      getFormattedNumber(this.state.proposal._optionTwoVotes / 1e18, 6)
-    );
+    localStorage.setItem('NoVotes', getFormattedNumber(this.state.proposal._optionTwoVotes / 1e18, 6) );
+
   };
 
   handleExecute = () => {
@@ -911,8 +901,8 @@ class ProposalDetails extends React.Component {
                           marginBottom: 20,
                         }}
                       >
-                        <img height={38} src={proposal.vault.logo.toString()} />{" "}
-                        {proposal.vault.name.toString()}
+                        <img height={38} src={proposal.vault ? proposal.vault.logo.toString() : "/logo192.png"} />{" "}
+                        {proposal.vault ? proposal.vault.name.toString() : "DYP Proposal" }
                       </h5>
                       <div className="input-group ">
                         <input
