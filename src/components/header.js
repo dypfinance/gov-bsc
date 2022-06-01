@@ -35,7 +35,7 @@ export default class Header extends React.Component {
                       height: "75px",
                     }}
                     alt="Staking DAPP"
-                    src="/logo192.png"
+                    src="/img/svg/logo.svg"
                     height="125"
                   />
                   <img
@@ -48,7 +48,7 @@ export default class Header extends React.Component {
                       height: "75px",
                     }}
                     alt="Staking DAPP"
-                    src="/img/dlogo.svg"
+                    src="/img/svg/logo.svg"
                     height="125"
                   />{" "}
                   {/* <p
